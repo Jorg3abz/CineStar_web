@@ -9,11 +9,11 @@ import com.cibertec.demo.entity.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-	@Query(value="SELECT u.idusuario, u.usuario, u.nombres, u.apellidos, u.clave, u.idrol "
-			+ "FROM usuario u where u.usuario = :username", nativeQuery = true)
+	@Query(value="SELECT u.idusuario, u.username, u.nombres, u.apellidos, u.clave, u.idrol "
+			+ "FROM usuario u where u.username = :username", nativeQuery = true)
 	public Usuario findByUsuario(@Param("username") String username);
 	
-	@Query(value="SELECT u.idusuario, u.usuario, u.nombres, u.apellidos, u.clave, u.idrol "
-			+ "FROM usuario u where u.usuario = :username and u.clave = :clave", nativeQuery = true)
+	@Query(value="SELECT u.idusuario, u.username, u.nombres, u.apellidos, u.clave, u.idrol "
+			+ "FROM usuario u where u.username = :username and u.clave = :clave", nativeQuery = true)
 	public Usuario findByUsuarioAndClave(@Param("username") String username, @Param("clave") String clave);
 }

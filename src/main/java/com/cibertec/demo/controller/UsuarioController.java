@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.cibertec.demo.entity.Rol;
 import com.cibertec.demo.entity.Usuario;
+import com.cibertec.demo.repository.RolRepository;
+import com.cibertec.demo.service.RolService;
 import com.cibertec.demo.service.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +19,8 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
+	@Autowired
+	private RolRepository rolRepository;
 	
 	
 	// Página principal
@@ -42,11 +47,13 @@ public class UsuarioController {
         return "home";
     }
 
-    // Registro
+ // Registro
     @PostMapping("/register/save")
     public String registro(Usuario usuario) {
-        usuarioService.guardarUsuario(usuario);
-        return "redirect:/";
+    	Rol rolCliente = rolRepository.findById(2).orElse(null);
+    	usuario.setRol(rolCliente);
+    	usuarioService.guardarUsuario(usuario);
+    	return "redirect:/";
     }
 
     // Logout
