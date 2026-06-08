@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{fragments/head :: head('Inicio')}">
+  <meta charset="UTF-8"/>
+  <title>Cine Premium</title>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <!-- ═══════════════════════════════════════
+       HERO / BANNER DESLIZANTE
+  ══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-slides" id="heroSlides">
+
+      <div class="hero-slide active" style="--bg: url('/img/banners/banner1.webp')">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="hero-badge">Estreno</span>
+          <h1 class="hero-title">Scary Movie</h1>
+          <p class="hero-meta">Comedia &bull; 1h 35min &bull; +16</p>
+          <p class="hero-desc">Veintiséis años después de escapar de un asesino enmascarado sospechosamente familiar (“Ghostface”), el Cuarteto original 
+							   vuelve a ser objetivo y ninguna franquicia de terror está a salvo. Marlon Wayans (“Shorty”), Shawn Wayans (“Ray”), Anna Faris (“Cindy”) 
+							   y Regina Hall (“Brenda”) se reúnen en Scary Movie con caras conocidas y nuevos rostros para destrozar reboots, remakes, requels, precuelas, 
+							   secuelas, spin-offs, el llamado horror “elevado”, historias de origen, todo lo que incluya la palabra legado y cada supuesta “última entrega” 
+							   que no lo es. Nada queda sagrado. No queda ningún cliché intacto. Se cruzan todas las líneas. Los Wayans han regresado para poner fin a la 
+							   cultura de la cancelación..</p>
+          <div class="hero-btns">
+            <a th:href="@{/cartelera}" class="btn-hero-primary">Comprar Entradas</a>
+            <a th:href="@{/cartelera}" class="btn-hero-secondary">Ver más</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-slide" style="--bg: url('/img/banners/banner2.webp')">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="hero-badge">En Cartelera</span>
+          <h1 class="hero-title">Obsesion</h1>
+          <p class="hero-meta">Terror &bull; 1h 48min &bull; +16</p>
+          <p class="hero-desc">Después de romper el Sauce del deseo para conquistar el corazón de la chica que le gusta, 
+							   un romántico empedernido consigue exactamente lo que pidió, pero pronto descubre que algunos 
+							   deseos tienen un precio oscuro y siniestro..</p>
+          <div class="hero-btns">
+            <a th:href="@{/cartelera}" class="btn-hero-primary">Comprar Entradas</a>
+            <a th:href="@{/cartelera}" class="btn-hero-secondary">Ver más</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-slide" style="--bg: url('/img/banners/banner3.webp')">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="hero-badge">En Cartelera</span>
+          <h1 class="hero-title">BACKROOMS</h1>
+          <p class="hero-meta">Terror &bull; 1h 51min &bull; +16</p>
+          <p class="hero-desc">Una extraña puerta aparece en el sótano de una sala de exposición de muebles..</p>
+          <div class="hero-btns">
+            <a th:href="@{/preventas}" class="btn-hero-primary">Reservar Ahora</a>
+            <a th:href="@{/preventas}" class="btn-hero-secondary">Ver más</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controles del slider -->
+    <button class="hero-arrow left" onclick="prevSlide()">&#8249;</button>
+    <button class="hero-arrow right" onclick="nextSlide()">&#8250;</button>
+
+    <!-- Indicadores -->
+    <div class="hero-dots">
+      <span class="hero-dot active" onclick="goToSlide(0)"></span>
+      <span class="hero-dot" onclick="goToSlide(1)"></span>
+      <span class="hero-dot" onclick="goToSlide(2)"></span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       PELÍCULAS EN CARTELERA
+  ══════════════════════════════════════════ -->
+  <section class="section-block">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Esta semana</span>
+          <h2 class="section-title">Cartelera</h2>
+        </div>
+        <a th:href="@{/cartelera}" class="btn-ver-todo">Ver todo &rarr;</a>
+      </div>
+
+      <div class="movies-grid">
+
+        <div class="movie-card">
+          <div class="movie-poster">
+            <img th:src="@{/img/posters/cartelera1.webp}" alt="Película 1"/>
+            <div class="movie-overlay">
+              <a th:href="@{/cartelera}" class="btn-comprar">Comprar</a>
+            </div>
+            <span class="movie-rating">+14</span>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">Título Película 1</h3>
+            <p class="movie-genre">Acción &bull; 2h 15min</p>
+          </div>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-poster">
+            <img th:src="@{/img/posters/pelicula2.jpg}" alt="Película 2"/>
+            <div class="movie-overlay">
+              <a th:href="@{/cartelera}" class="btn-comprar">Comprar</a>
+            </div>
+            <span class="movie-rating">+14</span>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">Título Película 2</h3>
+            <p class="movie-genre">Drama &bull; 1h 58min</p>
+          </div>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-poster">
+            <img th:src="@{/img/posters/pelicula3.jpg}" alt="Película 3"/>
+            <div class="movie-overlay">
+              <a th:href="@{/cartelera}" class="btn-comprar">Comprar</a>
+            </div>
+            <span class="movie-rating">+18</span>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">Título Película 3</h3>
+            <p class="movie-genre">Terror &bull; 1h 45min</p>
+          </div>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-poster">
+            <img th:src="@{/img/posters/pelicula4.jpg}" alt="Película 4"/>
+            <div class="movie-overlay">
+              <a th:href="@{/cartelera}" class="btn-comprar">Comprar</a>
+            </div>
+            <span class="movie-rating">ATP</span>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">Título Película 4</h3>
+            <p class="movie-genre">Animación &bull; 1h 30min</p>
+          </div>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-poster">
+            <img th:src="@{/img/posters/pelicula5.jpg}" alt="Película 5"/>
+            <div class="movie-overlay">
+              <a th:href="@{/cartelera}" class="btn-comprar">Comprar</a>
+            </div>
+            <span class="movie-rating">+14</span>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">Título Película 5</h3>
+            <p class="movie-genre">Comedia &bull; 1h 52min</p>
+          </div>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-poster">
+            <img th:src="@{/img/posters/pelicula6.jpg}" alt="Película 6"/>
+            <div class="movie-overlay">
+              <a th:href="@{/cartelera}" class="btn-comprar">Comprar</a>
+            </div>
+            <span class="movie-rating">+14</span>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">Título Película 6</h3>
+            <p class="movie-genre">Suspenso &bull; 2h 05min</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       PREVENTAS
+  ══════════════════════════════════════════ -->
+  <section class="section-block section-dark">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Próximamente</span>
+          <h2 class="section-title">Preventas</h2>
+        </div>
+        <a th:href="@{/preventas}" class="btn-ver-todo">Ver todo &rarr;</a>
+      </div>
+
+      <div class="preventas-grid">
+
+        <div class="preventa-card">
+          <img th:src="@{/img/posters/preventa1.jpg}" alt="Preventa 1"/>
+          <div class="preventa-info">
+            <span class="preventa-fecha">Estreno: 20 Jun 2026</span>
+            <h3>Título Preventa 1</h3>
+            <p>Ciencia Ficción &bull; +14</p>
+            <a th:href="@{/preventas}" class="btn-preventa">Reservar</a>
+          </div>
+        </div>
+
+        <div class="preventa-card">
+          <img th:src="@{/img/posters/preventa2.jpg}" alt="Preventa 2"/>
+          <div class="preventa-info">
+            <span class="preventa-fecha">Estreno: 27 Jun 2026</span>
+            <h3>Título Preventa 2</h3>
+            <p>Acción &bull; +14</p>
+            <a th:href="@{/preventas}" class="btn-preventa">Reservar</a>
+          </div>
+        </div>
+
+        <div class="preventa-card">
+          <img th:src="@{/img/posters/preventa3.jpg}" alt="Preventa 3"/>
+          <div class="preventa-info">
+            <span class="preventa-fecha">Estreno: 04 Jul 2026</span>
+            <h3>Título Preventa 3</h3>
+            <p>Aventura &bull; ATP</p>
+            <a th:href="@{/preventas}" class="btn-preventa">Reservar</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FORMATOS
+  ══════════════════════════════════════════ -->
+  <section class="section-block">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Experiencias</span>
+          <h2 class="section-title">Nuestros Formatos</h2>
+        </div>
+      </div>
+
+      <div class="formatos-grid">
+        <div class="formato-card">
+          <div class="formato-icon">&#127916;</div>
+          <h3>2D</h3>
+          <p>La experiencia clásica con la mejor calidad de imagen y sonido digital.</p>
+        </div>
+        <div class="formato-card formato-highlight">
+          <div class="formato-icon">&#10024;</div>
+          <h3>3D</h3>
+          <p>Sumérgete en la acción con nuestra tecnología de proyección tridimensional.</p>
+        </div>
+        <div class="formato-card">
+          <div class="formato-icon">&#127911;</div>
+          <h3>PREMIUM</h3>
+          <p>Sonido Dolby Atmos y pantalla gigante para una experiencia sin igual.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="cine-footer">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <!-- Logo y descripción -->
+        <div class="footer-brand">
+          <div class="footer-logo">CINE<span>PREMIUM</span></div>
+          <p>Tu mejor experiencia cinematográfica. Las mejores películas, el mejor sonido, la mejor pantalla.</p>
+        </div>
+
+        <!-- Links rápidos -->
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/cartelera}">Cartelera</a></li>
+            <li><a th:href="@{/preventas}">Preventas</a></li>
+            <li><a th:href="@{/snacks}">Snacks</a></li>
+          </ul>
+        </div>
+
+        <!-- Contacto -->
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li>&#128205; Lima, Perú</li>
+            <li>&#128222; +51 987 654 321</li>
+            <li>&#128231; contacto@cinepremium.pe</li>
+          </ul>
+        </div>
+
+        <!-- Redes y reclamos -->
+        <div class="footer-col">
+          <h4>Síguenos</h4>
+          <div class="footer-socials">
+            <a href="#" class="social-btn">f</a>
+            <a href="#" class="social-btn">in</a>
+            <a href="#" class="social-btn">&#9654;</a>
+          </div>
+          <a th:href="@{/reclamos}" class="btn-reclamos">
+            &#128203; Libro de Reclamaciones
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cine Premium. Todos los derechos reservados.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <div th:replace="~{fragments/scripts :: scripts}"></div>
+
+  <!-- SLIDER SCRIPT -->
+  <script>
+    let current = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    let autoplay = setInterval(nextSlide, 5000);
+
+    function goToSlide(n) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+    function nextSlide() { goToSlide(current + 1); }
+    function prevSlide() { goToSlide(current - 1); }
+
+    // Reiniciar autoplay al hacer click manual
+    document.querySelectorAll('.hero-arrow, .hero-dot').forEach(el => {
+      el.addEventListener('click', () => {
+        clearInterval(autoplay);
+        autoplay = setInterval(nextSlide, 5000);
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Inicio')}">
+</head>
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+  <div class="container" style="padding-top: 2rem;">
+    <h2>Bienvenido</h2>
+    <a th:href="@{/logout}">Cerrar sesión</a>
+  </div>
+</body>
+</html>

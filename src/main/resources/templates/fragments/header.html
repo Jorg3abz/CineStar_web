@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<link rel="stylesheet" th:href="@{/css/header.css}"/>
+	<link rel="stylesheet" th:href="@{/css/index.css}"/>
+	
+<header th:fragment="header">
+
+  <!-- ════════ NAVBAR ════════ -->
+  <nav class="cine-nav">
+
+    <!-- Logo -->
+    <a th:href="@{/}" class="cine-logo">
+      <span class="cine-logo-dot"></span>
+      CINE<span class="logo-accent">STAR</span>
+    </a>
+
+    <!-- Links -->
+    <ul class="cine-nav-links">
+      <li><a th:href="@{/}" class="active">Inicio</a></li>
+      <li><a th:href="@{/cartelera}">Cartelera</a></li>
+      <li><a th:href="@{/preventas}">Preventas</a></li>
+      <li><a th:href="@{/snacks}">Snacks</a></li>
+      <li><a th:href="@{/reclamos}">Reclamos</a></li>
+    </ul>
+
+    <!-- Botón acceder -->
+    <div class="cine-nav-right">
+      <button class="btn-login" onclick="openModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        Acceder
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- ════════ MODAL LOGIN / REGISTRO ════════ -->
+  <div class="modal-overlay" id="authModal" onclick="closeModalOutside(event)">
+    <div class="modal-box">
+
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+
+      <div class="modal-logo">CINE<span class="logo-accent">STAR</span></div>
+      <p class="modal-subtitle">Tu experiencia cinematográfica comienza aquí</p>
+
+      <!-- Tabs -->
+      <div class="modal-tabs">
+        <div class="modal-tab active" id="tab-login" onclick="switchTab('login')">Iniciar Sesión</div>
+        <div class="modal-tab" id="tab-register" onclick="switchTab('register')">Registrarse</div>
+      </div>
+
+      <!-- ── FORM LOGIN ── -->
+      <div class="modal-form active" id="form-login">
+        <div class="form-error" id="login-error">Usuario o contraseña incorrectos</div>
+        <form th:action="@{/login}" method="POST">
+          <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" name="username" placeholder="Tu usuario" required/>
+          </div>
+          <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" name="clave" placeholder="••••••••" required/>
+          </div>
+          <button type="submit" class="btn-submit">Ingresar</button>
+        </form>
+        <p class="modal-switch">
+          ¿No tienes cuenta? <a onclick="switchTab('register')">Regístrate aquí</a>
+        </p>
+      </div>
+
+      <!-- ── FORM REGISTRO ── -->
+      <div class="modal-form" id="form-register">
+        <form th:action="@{/register/save}" method="POST">
+          <div class="form-group">
+            <label>Nombres</label>
+            <input type="text" name="nombres" placeholder="Tus nombres" required/>
+          </div>
+          <div class="form-group">
+            <label>Apellidos</label>
+            <input type="text" name="apellidos" placeholder="Tus apellidos" required/>
+          </div>
+          <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" name="username" placeholder="Elige un usuario" required/>
+          </div>
+          <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" name="clave" placeholder="••••••••" required/>
+          </div>
+          <button type="submit" class="btn-submit">Crear Cuenta</button>
+        </form>
+        <p class="modal-switch">
+          ¿Ya tienes cuenta? <a onclick="switchTab('login')">Inicia sesión</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════ SCRIPTS DEL MODAL ════════ -->
+  <script>
+    function openModal() {
+      document.getElementById('authModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('authModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    function closeModalOutside(e) {
+      if (e.target.id === 'authModal') closeModal();
+    }
+    function switchTab(tab) {
+      document.getElementById('form-login').classList.remove('active');
+      document.getElementById('form-register').classList.remove('active');
+      document.getElementById('tab-login').classList.remove('active');
+      document.getElementById('tab-register').classList.remove('active');
+      document.getElementById('form-' + tab).classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('error') === 'login') {
+        openModal();
+        document.getElementById('login-error').classList.add('show');
+      }
+      if (params.get('register') === 'open') {
+        openModal();
+        switchTab('register');
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
+</header>
+</body>
+</html>
