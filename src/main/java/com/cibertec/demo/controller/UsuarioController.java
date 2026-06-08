@@ -2,6 +2,7 @@ package com.cibertec.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -20,9 +21,11 @@ public class UsuarioController {
 	
 	// Página principal
 	@GetMapping("/")
-    public String index() {
-        return "index";
-    }
+	public String index(HttpSession session, Model model) {
+	    String usuario =(String) session.getAttribute("usuarioLogueado");
+	    model.addAttribute("usuario", usuario);
+	    return "index";
+	}
 	
 	// Login desde el modal
     @PostMapping("/login")
@@ -30,7 +33,7 @@ public class UsuarioController {
         boolean band = usuarioService.login(usuario);
         if (band) {
             session.setAttribute("usuarioLogueado", usuario.getUsername());
-            return "redirect:/home";
+            return "redirect:/";
         } else {
             return "redirect:/?error=login";
         }

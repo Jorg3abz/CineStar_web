@@ -26,15 +26,40 @@
     </ul>
 
     <!-- Botón acceder -->
-    <div class="cine-nav-right">
-      <button class="btn-login" onclick="openModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-        </svg>
-        Acceder
-      </button>
-    </div>
+	<!-- Usuario / Login -->
+	<div class="cine-nav-right">
+
+	    <!-- Si NO ha iniciado sesión -->
+	    <button th:if="${usuario == null}"
+	            class="btn-login"
+	            onclick="openModal()">
+
+	        <svg viewBox="0 0 24 24"
+	             fill="none"
+	             stroke="currentColor"
+	             stroke-width="2">
+	            <circle cx="12" cy="8" r="4"/>
+	            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+	        </svg>
+
+	        Acceder
+	    </button>
+
+	    <!-- Si ha iniciado sesión -->
+	    <div th:if="${usuario != null}"
+	         class="usuario-logueado">
+
+	        <span class="usuario-nombre">
+	            👤 <span th:text="${usuario}"></span>
+	        </span>
+
+	        <a th:href="@{/logout}" class="btn-logout">
+	            Salir
+	        </a>
+
+	    </div>
+
+	</div>
 
   </nav>
 
