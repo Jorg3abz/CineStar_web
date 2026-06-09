@@ -232,3 +232,122 @@
 .reclamo-form select option {
   background: var(--cine-dark);
 }
+
+/* ── FECHA DASHBOARD ── */
+.dashboard-fecha {
+  font-size: 0.88rem;
+  color: var(--cine-muted);
+  border: 1px solid var(--cine-border);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+}
+
+/* ── BARRA DE PROGRESO ── */
+.progreso-container {
+  background: var(--cine-border);
+  border-radius: 20px;
+  height: 6px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.progreso-barra {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 1s ease;
+}
+
+.progreso-verde   { background: #22c55e; }
+.progreso-azul    { background: #3b82f6; }
+.progreso-amarillo{ background: #f5c518; }
+.progreso-rojo    { background: #e63946; }
+
+.progreso-label {
+  font-size: 0.72rem;
+  color: var(--cine-muted);
+  margin-top: 0.4rem;
+  text-align: right;
+}
+
+/* ── FILA INFERIOR ── */
+.dashboard-bottom {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.dashboard-dona-card {
+  background: var(--cine-card);
+  border: 1px solid var(--cine-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.dona-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--cine-text);
+  margin-bottom: 1rem;
+}
+
+.dona-leyenda {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.leyenda-item {
+  font-size: 0.78rem;
+  color: var(--cine-muted);
+}
+
+.leyenda-pendiente { color: #f5c518; }
+.leyenda-revision  { color: #3b82f6; }
+.leyenda-resuelto  { color: #22c55e; }
+
+/* ── ACCIONES RÁPIDAS ── */
+.dashboard-acciones {
+  background: var(--cine-card);
+  border: 1px solid var(--cine-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.accion-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--cine-dark);
+  border: 1px solid var(--cine-border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+  margin-top: 1rem;
+}
+
+.accion-card:hover {
+  border-color: var(--cine-gold);
+  transform: translateX(4px);
+}
+
+.accion-icono {
+  font-size: 1.8rem;
+}
+
+.accion-titulo {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--cine-text);
+  margin-bottom: 0.2rem;
+}
+
+.accion-desc {
+  font-size: 0.78rem;
+  color: var(--cine-muted);
+}

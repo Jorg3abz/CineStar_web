@@ -1,0 +1,167 @@
+/* =============================================
+   RECLAMOS - VISTAS CLIENTE
+   Archivo: static/css/reclamos.css
+   ============================================= */
+
+/* ── FORMULARIO NUEVO RECLAMO ── */
+.reclamo-form {
+  background: var(--cine-card);
+  border: 1px solid var(--cine-border);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 700px;
+}
+
+.reclamo-form .form-group {
+  margin-bottom: 1.2rem;
+}
+
+.reclamo-form label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cine-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.reclamo-form input,
+.reclamo-form select,
+.reclamo-form textarea {
+  width: 100%;
+  background: var(--cine-dark);
+  border: 1px solid var(--cine-border);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  color: var(--cine-text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.reclamo-form input:focus,
+.reclamo-form select:focus,
+.reclamo-form textarea:focus {
+  border-color: var(--cine-gold);
+}
+
+.reclamo-form select option {
+  background: var(--cine-dark);
+}
+
+/* ── LISTA DE RECLAMOS ── */
+.reclamos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.reclamo-card {
+  background: var(--cine-card);
+  border: 1px solid var(--cine-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.reclamo-card:hover {
+  border-color: var(--cine-gold);
+}
+
+.reclamo-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.reclamo-tipo {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cine-gold);
+}
+
+.reclamo-asunto {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cine-text);
+  margin-bottom: 0.5rem;
+}
+
+.reclamo-desc {
+  font-size: 0.85rem;
+  color: var(--cine-muted);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.reclamo-fecha {
+  font-size: 0.75rem;
+  color: var(--cine-muted);
+  margin-bottom: 0.8rem;
+}
+
+.reclamo-respuesta {
+  background: rgba(245, 197, 24, 0.05);
+  border: 1px solid rgba(245, 197, 24, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.8rem;
+}
+
+.reclamo-respuesta strong {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cine-gold);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.reclamo-respuesta p {
+  font-size: 0.85rem;
+  color: var(--cine-text);
+  line-height: 1.6;
+}
+
+/* ── SIN RECLAMOS ── */
+.reclamo-vacio {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--cine-muted);
+}
+
+.reclamo-vacio p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── ESTADOS ── */
+.reclamo-estado {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.estado-pendiente {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--cine-gold);
+}
+
+.estado-revision {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.estado-resuelto {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}

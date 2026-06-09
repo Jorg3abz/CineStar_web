@@ -14,50 +14,137 @@
           <span class="section-tag">Panel de Control</span>
           <h2 class="section-title">Dashboard</h2>
         </div>
-        <span th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}"></span>
+        <span class="dashboard-fecha" th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}"></span>
       </div>
 
       <!-- Tarjetas de estadísticas -->
       <div class="dashboard-grid">
 
-        <!-- Reclamos hoy -->
         <div class="dashboard-card"
              th:classappend="${reclamosHoy == 0} ? 'estado-excelente' :
                              (${reclamosHoy <= 2} ? 'estado-bien' :
                              (${reclamosHoy <= 4} ? 'estado-atencion' : 'estado-critico'))">
-          <div class="dashboard-numero" th:text="${reclamosHoy}"></div>
+          <div class="dashboard-numero" id="numHoy" th:attr="data-target=${reclamosHoy}">0</div>
           <div class="dashboard-label">Reclamos Hoy</div>
           <div class="dashboard-mensaje"
                th:text="${reclamosHoy == 0} ? '✓ Excelente' :
                         (${reclamosHoy <= 2} ? '● Bien' :
                         (${reclamosHoy <= 4} ? '▲ Atención' : '✕ Crítico'))">
           </div>
+          <!-- Barra de progreso -->
+          <div class="progreso-container">
+            <div class="progreso-barra"
+                 th:style="'width:' + (${reclamosHoy} > 5 ? 100 : ${reclamosHoy} * 20) + '%'"
+                 th:classappend="${reclamosHoy == 0} ? 'progreso-verde' :
+                                 (${reclamosHoy <= 2} ? 'progreso-azul' :
+                                 (${reclamosHoy <= 4} ? 'progreso-amarillo' : 'progreso-rojo'))">
+            </div>
+          </div>
+          <div class="progreso-label">
+            <span th:text="${reclamosHoy} + ' / 5 límite diario'"></span>
+          </div>
         </div>
 
-        <!-- Reclamos este mes -->
         <div class="dashboard-card estado-neutro">
-          <div class="dashboard-numero" th:text="${reclamosMes}"></div>
+          <div class="dashboard-numero" id="numMes" th:attr="data-target=${reclamosMes}">0</div>
           <div class="dashboard-label">Reclamos este Mes</div>
         </div>
 
-        <!-- Reclamos este año -->
         <div class="dashboard-card estado-neutro">
-          <div class="dashboard-numero" th:text="${reclamosAnio}"></div>
+          <div class="dashboard-numero" id="numAnio" th:attr="data-target=${reclamosAnio}">0</div>
           <div class="dashboard-label">Reclamos este Año</div>
         </div>
 
       </div>
 
-      <!-- Botón al buzón -->
-      <div style="margin-top: 2rem;">
-        <a th:href="@{/reclamos/admin/buzon}" class="btn-hero-primary">
-          Ver Buzón de Reclamos
-        </a>
+      <!-- Fila inferior: dona + botón buzón -->
+      <div class="dashboard-bottom">
+
+        <!-- Gráfico dona -->
+        <div class="dashboard-dona-card">
+          <h3 class="dona-titulo">Estado de Reclamos</h3>
+          <canvas id="graficoDona" width="260" height="260"></canvas>
+          <div class="dona-leyenda">
+            <span class="leyenda-item leyenda-pendiente">● Pendiente</span>
+            <span class="leyenda-item leyenda-revision">● En Revisión</span>
+            <span class="leyenda-item leyenda-resuelto">● Resuelto</span>
+          </div>
+        </div>
+
+        <!-- Acceso rápido -->
+        <div class="dashboard-acciones">
+          <h3 class="dona-titulo">Acciones Rápidas</h3>
+          <a th:href="@{/reclamos/admin/buzon}" class="accion-card">
+            <span class="accion-icono">📬</span>
+            <div>
+              <div class="accion-titulo">Buzón de Reclamos</div>
+              <div class="accion-desc">Ver y gestionar todos los reclamos</div>
+            </div>
+          </a>
+        </div>
+
       </div>
 
     </div>
   </section>
 
   <div th:replace="~{fragments/scripts :: scripts}"></div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script th:inline="javascript">
+    // Animación de números
+    function animarNumero(el) {
+      const target = parseInt(el.getAttribute('data-target'));
+      let current = 0;
+      const step = Math.ceil(target / 30);
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        el.textContent = current;
+      }, 40);
+    }
+
+    document.querySelectorAll('.dashboard-numero').forEach(animarNumero);
+
+    // Gráfico de dona
+	const pendientes = /*[[${pendientes}]]*/ 0;
+	const enRevision = /*[[${enRevision}]]*/ 0;
+	const resueltos  = /*[[${resueltos}]]*/ 0;
+
+    const ctx = document.getElementById('graficoDona').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Pendiente', 'En Revisión', 'Resuelto'],
+        datasets: [{
+          data: [pendientes, enRevision, resueltos],
+          backgroundColor: [
+            'rgba(245, 197, 24, 0.8)',
+            'rgba(59, 130, 246, 0.8)',
+            'rgba(34, 197, 94, 0.8)'
+          ],
+          borderColor: [
+            '#f5c518',
+            '#3b82f6',
+            '#22c55e'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: { display: false }
+        },
+        cutout: '70%'
+      }
+    });
+  </script>
+
 </body>
 </html>

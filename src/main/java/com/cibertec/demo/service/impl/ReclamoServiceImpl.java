@@ -57,4 +57,9 @@ public class ReclamoServiceImpl implements ReclamoService {
     public Long contarReclamosAnio() {
         return reclamoRepository.contarReclamosAnio();
     }
+    
+    @Override
+    public Long contarPorEstado(String estado) {
+        return reclamoRepository.contarPorEstado(estado);
+    }
 }

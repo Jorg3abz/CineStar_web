@@ -13,7 +13,7 @@
     <!-- Logo -->
     <a th:href="@{/}" class="cine-logo">
       <span class="cine-logo-dot"></span>
-      CINE<span class="logo-accent">STAR</span>
+      CINE<span class="logo-accent">PREMIUM</span>
     </a>
 
 	<!-- Links - CLIENTE o no logueado -->
@@ -59,18 +59,11 @@
 		    </button>
 
 		    <!-- Si ha iniciado sesión -->
-		    <div th:if="${usuario != null}"
-		         class="usuario-logueado">
-
-		        <span class="usuario-nombre">
-		            👤 <span th:text="${usuario}"></span>
-		        </span>
-
-		        <a th:href="@{/logout}" class="btn-logout">
-		            Salir
-		        </a>
-
-		    </div>
+			<div th:if="${usuario != null}" class="usuario-logueado">
+			    <div class="usuario-avatar" th:text="${#strings.substring(usuario, 0, 1).toUpperCase()}"></div>
+			    <span class="usuario-nombre" th:text="${usuario}"></span>
+			    <a th:href="@{/logout}" class="btn-logout">Salir</a>
+			</div>
 
 		</div>
 
@@ -82,7 +75,7 @@
 
       <button class="modal-close" onclick="closeModal()">&#x2715;</button>
 
-      <div class="modal-logo">CINE<span class="logo-accent">STAR</span></div>
+      <div class="modal-logo">CINE<span class="logo-accent">PREMIUN</span></div>
       <p class="modal-subtitle">Tu experiencia cinematográfica comienza aquí</p>
 
       <!-- Tabs -->

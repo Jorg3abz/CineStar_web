@@ -14,4 +14,5 @@ public interface ReclamoService {
     public Long contarReclamosHoy();
     public Long contarReclamosMes();
     public Long contarReclamosAnio();
+    public Long contarPorEstado(String estado);
 }

@@ -20,13 +20,16 @@ public class AdminController {
 	@GetMapping("/dashboard")
 	public String dashboard(HttpSession session, Model model) {
 	    String usuario = (String) session.getAttribute("usuarioLogueado");
-	    if (usuario == null) {
-	        return "redirect:/";
-	    }
+	    if (usuario == null) return "redirect:/";
+
 	    model.addAttribute("usuario", usuario);
 	    model.addAttribute("reclamosHoy", reclamoService.contarReclamosHoy());
 	    model.addAttribute("reclamosMes", reclamoService.contarReclamosMes());
 	    model.addAttribute("reclamosAnio", reclamoService.contarReclamosAnio());
+	    model.addAttribute("pendientes", reclamoService.contarPorEstado("Pendiente"));
+	    model.addAttribute("enRevision", reclamoService.contarPorEstado("En Revision"));
+	    model.addAttribute("resueltos", reclamoService.contarPorEstado("Resuelto"));
+
 	    return "admin/dashboard";
 	}
 }

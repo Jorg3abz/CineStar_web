@@ -338,3 +338,45 @@ body {
   .cine-nav { padding: 0 1.2rem; }
   .modal-box { margin: 1rem; padding: 1.8rem; }
 }
+
+/* ── USUARIO LOGUEADO ── */
+.usuario-logueado {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.usuario-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--cine-gold);
+  color: #000;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.usuario-nombre {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--cine-text);
+}
+
+.btn-logout {
+  font-size: 0.82rem;
+  color: var(--cine-muted);
+  text-decoration: none;
+  border: 1px solid var(--cine-border);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.btn-logout:hover {
+  color: var(--cine-red);
+  border-color: var(--cine-red);
+}
