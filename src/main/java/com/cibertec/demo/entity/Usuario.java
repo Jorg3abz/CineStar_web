@@ -28,7 +28,7 @@ public class Usuario {
 	private String nombres;
 	private String apellidos;
 	
-	@Column(name = "username")
+	@Column(name = "username") //Cambio
 	private String username;
 
 	private String clave;

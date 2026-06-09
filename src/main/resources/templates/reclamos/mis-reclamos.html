@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{fragments/head :: head('Mis Reclamos')}"></head>
+
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <section class="section-block">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Atención al cliente</span>
+          <h2 class="section-title">Mis Reclamos</h2>
+        </div>
+        <a th:href="@{/reclamos/nuevo}" class="btn-ver-todo">+ Nuevo Reclamo</a>
+      </div>
+
+      <!-- Sin reclamos -->
+      <div th:if="${#lists.isEmpty(reclamos)}" class="reclamo-vacio">
+        <p>No tienes reclamos registrados.</p>
+        <a th:href="@{/reclamos/nuevo}" class="btn-hero-primary">Registrar Reclamo</a>
+      </div>
+
+      <!-- Lista de reclamos -->
+      <div th:unless="${#lists.isEmpty(reclamos)}" class="reclamos-lista">
+        <div th:each="r : ${reclamos}" class="reclamo-card">
+
+          <div class="reclamo-card-header">
+            <span class="reclamo-tipo" th:text="${r.tipo}"></span>
+            <span class="reclamo-estado"
+                  th:classappend="${r.estado == 'Pendiente'} ? 'estado-pendiente' :
+                                  (${r.estado == 'En Revision'} ? 'estado-revision' : 'estado-resuelto')"
+                  th:text="${r.estado}">
+            </span>
+          </div>
+
+          <h3 class="reclamo-asunto" th:text="${r.asunto}"></h3>
+          <p class="reclamo-desc" th:text="${r.descripcion}"></p>
+          <p class="reclamo-fecha" th:text="${#temporals.format(r.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></p>
+
+          <!-- Respuesta del admin -->
+          <div th:if="${r.respuesta != null}" class="reclamo-respuesta">
+            <strong>Respuesta:</strong>
+            <p th:text="${r.respuesta}"></p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

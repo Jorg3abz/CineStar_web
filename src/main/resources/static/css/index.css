@@ -291,6 +291,8 @@
 
 .movie-info {
   padding: 0.6rem 0.2rem 0;
+  width: 100%;      
+  min-width: 0; 
 }
 .movie-title {
   font-size: 0.88rem;
@@ -301,9 +303,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .movie-genre {
   font-size: 0.75rem;
   color: var(--cine-muted);
+  white-space: nowrap;      /* NUEVO */
+  overflow: hidden;          /* NUEVO */
+  text-overflow: ellipsis;   /* NUEVO */
 }
 
 /* ═══════════════════════════════════════
@@ -392,10 +398,12 @@
   background: var(--cine-card);
   border: 1px solid var(--cine-border);
   border-radius: 12px;
-  padding: 2.5rem 2rem;
+  padding: 0;           /* SIN padding arriba para que la imagen llegue al borde */
   text-align: center;
   transition: border-color 0.2s, transform 0.2s;
+  overflow: hidden;
 }
+
 .formato-card:hover {
   border-color: var(--cine-gold);
   transform: translateY(-4px);
@@ -422,6 +430,17 @@
   font-size: 0.85rem;
   color: var(--cine-muted);
   line-height: 1.6;
+}
+
+.formato-img {
+  width: 100%;
+  max-width: 100%;      /* ocupa todo el card */
+  height: 160px;        /* altura fija */
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: block;
 }
 
 /* ═══════════════════════════════════════

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{fragments/head :: head('Detalle Reclamo')}"></head>
+
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <section class="section-block">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Administración</span>
+          <h2 class="section-title">Detalle del Reclamo</h2>
+        </div>
+        <a th:href="@{/reclamos/admin/buzon}" class="btn-ver-todo">← Volver al Buzón</a>
+      </div>
+
+      <!-- Datos del reclamo -->
+      <div class="detalle-reclamo">
+
+        <div class="detalle-fila">
+          <span class="detalle-label">Cliente</span>
+          <span th:text="${reclamo.usuario.nombres + ' ' + reclamo.usuario.apellidos}"></span>
+        </div>
+        <div class="detalle-fila">
+          <span class="detalle-label">Tipo</span>
+          <span th:text="${reclamo.tipo}"></span>
+        </div>
+        <div class="detalle-fila">
+          <span class="detalle-label">Asunto</span>
+          <span th:text="${reclamo.asunto}"></span>
+        </div>
+        <div class="detalle-fila">
+          <span class="detalle-label">Descripción</span>
+          <span th:text="${reclamo.descripcion}"></span>
+        </div>
+        <div class="detalle-fila">
+          <span class="detalle-label">Fecha</span>
+          <span th:text="${#temporals.format(reclamo.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+        <div class="detalle-fila">
+          <span class="detalle-label">Estado actual</span>
+          <span class="reclamo-estado"
+                th:classappend="${reclamo.estado == 'Pendiente'} ? 'estado-pendiente' :
+                                (${reclamo.estado == 'En Revision'} ? 'estado-revision' : 'estado-resuelto')"
+                th:text="${reclamo.estado}">
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Formulario de respuesta -->
+      <form th:action="@{/reclamos/admin/actualizar}" method="post" class="reclamo-form">
+        <input type="hidden" name="id" th:value="${reclamo.id}"/>
+
+        <div class="form-group">
+          <label>Actualizar Estado</label>
+          <select name="estado" required>
+            <option value="Pendiente"    th:selected="${reclamo.estado == 'Pendiente'}">Pendiente</option>
+            <option value="En Revision"  th:selected="${reclamo.estado == 'En Revision'}">En Revisión</option>
+            <option value="Resuelto"     th:selected="${reclamo.estado == 'Resuelto'}">Resuelto</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Respuesta</label>
+          <textarea name="respuesta" rows="5" 
+                    placeholder="Escribe tu respuesta al cliente"
+                    th:text="${reclamo.respuesta}"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Guardar Respuesta</button>
+
+      </form>
+
+    </div>
+  </section>
+
+  <div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

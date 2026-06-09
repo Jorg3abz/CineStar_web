@@ -1,0 +1,234 @@
+/* =============================================
+   ADMIN - DASHBOARD Y VISTAS
+   Archivo: static/css/admin.css
+   ============================================= */
+
+/* ── DASHBOARD GRID ── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-card {
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid var(--cine-border);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.dashboard-card:hover {
+  transform: translateY(-4px);
+}
+
+.dashboard-numero {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cine-muted);
+  margin-bottom: 0.8rem;
+}
+
+.dashboard-mensaje {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* ── ESTADOS DEL DASHBOARD ── */
+.estado-excelente {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: #22c55e;
+}
+.estado-excelente .dashboard-numero { color: #22c55e; }
+.estado-excelente .dashboard-mensaje {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.estado-bien {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: #3b82f6;
+}
+.estado-bien .dashboard-numero { color: #3b82f6; }
+.estado-bien .dashboard-mensaje {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.estado-atencion {
+  background: rgba(245, 197, 24, 0.08);
+  border-color: var(--cine-gold);
+}
+.estado-atencion .dashboard-numero { color: var(--cine-gold); }
+.estado-atencion .dashboard-mensaje {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--cine-gold);
+}
+
+.estado-critico {
+  background: rgba(230, 57, 70, 0.08);
+  border-color: var(--cine-red);
+}
+.estado-critico .dashboard-numero { color: var(--cine-red); }
+.estado-critico .dashboard-mensaje {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--cine-red);
+}
+
+.estado-neutro {
+  background: var(--cine-card);
+  border-color: var(--cine-border);
+}
+.estado-neutro .dashboard-numero { color: var(--cine-text); }
+
+/* ── BUZÓN - TABLA ── */
+.buzon-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cine-card);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.buzon-tabla thead {
+  background: var(--cine-border);
+}
+
+.buzon-tabla th {
+  padding: 1rem 1.2rem;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cine-muted);
+}
+
+.buzon-tabla td {
+  padding: 1rem 1.2rem;
+  font-size: 0.88rem;
+  color: var(--cine-text);
+  border-bottom: 1px solid var(--cine-border);
+}
+
+.buzon-tabla tr:last-child td {
+  border-bottom: none;
+}
+
+.buzon-tabla tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* ── ESTADOS DE RECLAMO ── */
+.reclamo-estado {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.estado-pendiente {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--cine-gold);
+}
+
+.estado-revision {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.estado-resuelto {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+/* ── DETALLE RECLAMO ── */
+.detalle-reclamo {
+  background: var(--cine-card);
+  border: 1px solid var(--cine-border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.detalle-fila {
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--cine-border);
+}
+
+.detalle-fila:last-child {
+  border-bottom: none;
+}
+
+.detalle-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cine-muted);
+  min-width: 140px;
+}
+
+/* ── FORMULARIO RECLAMO ── */
+.reclamo-form {
+  background: var(--cine-card);
+  border: 1px solid var(--cine-border);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 700px;
+}
+
+.reclamo-form .form-group {
+  margin-bottom: 1.2rem;
+}
+
+.reclamo-form label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cine-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.reclamo-form input,
+.reclamo-form select,
+.reclamo-form textarea {
+  width: 100%;
+  background: var(--cine-dark);
+  border: 1px solid var(--cine-border);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  color: var(--cine-text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.reclamo-form input:focus,
+.reclamo-form select:focus,
+.reclamo-form textarea:focus {
+  border-color: var(--cine-gold);
+}
+
+.reclamo-form select option {
+  background: var(--cine-dark);
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{fragments/head :: head('Buzón de Reclamos')}"></head>
+
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <section class="section-block">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Administración</span>
+          <h2 class="section-title">Buzón de Reclamos</h2>
+        </div>
+        <a th:href="@{/admin/dashboard}" class="btn-ver-todo">← Volver al Dashboard</a>
+      </div>
+
+      <!-- Sin reclamos -->
+      <div th:if="${#lists.isEmpty(reclamos)}" class="reclamo-vacio">
+        <p>No hay reclamos registrados.</p>
+      </div>
+
+      <!-- Tabla de reclamos -->
+      <div th:unless="${#lists.isEmpty(reclamos)}">
+        <table class="buzon-tabla">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Cliente</th>
+              <th>Tipo</th>
+              <th>Asunto</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="r : ${reclamos}">
+              <td th:text="${r.id}"></td>
+              <td th:text="${r.usuario.nombres + ' ' + r.usuario.apellidos}"></td>
+              <td th:text="${r.tipo}"></td>
+              <td th:text="${r.asunto}"></td>
+              <td th:text="${#temporals.format(r.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></td>
+              <td>
+                <span class="reclamo-estado"
+                      th:classappend="${r.estado == 'Pendiente'} ? 'estado-pendiente' :
+                                      (${r.estado == 'En Revision'} ? 'estado-revision' : 'estado-resuelto')"
+                      th:text="${r.estado}">
+                </span>
+              </td>
+              <td>
+                <a th:href="@{/reclamos/admin/detalle/{id}(id=${r.id})}" 
+                   class="btn-comprar">Ver</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

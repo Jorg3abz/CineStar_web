@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{fragments/head :: head('Nuevo Reclamo')}"></head>
+
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <section class="section-block">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Atención al cliente</span>
+          <h2 class="section-title">Libro de Reclamaciones</h2>
+        </div>
+      </div>
+
+      <form th:action="@{/reclamos/guardar}" method="post" class="reclamo-form">
+
+        <div class="form-group">
+          <label>Tipo</label>
+          <select name="tipo" required>
+            <option value="">Selecciona una opción</option>
+            <option value="Queja">Queja</option>
+            <option value="Reclamo">Reclamo</option>
+            <option value="Sugerencia">Sugerencia</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Asunto</label>
+          <input type="text" name="asunto" placeholder="Escribe el asunto" required/>
+        </div>
+
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea name="descripcion" rows="5" placeholder="Describe tu reclamo detalladamente" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar Reclamo</button>
+
+      </form>
+
+    </div>
+  </section>
+
+  <div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

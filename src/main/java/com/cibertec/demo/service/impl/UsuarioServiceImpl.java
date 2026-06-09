@@ -47,4 +47,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Usuario entidad=usuarioRepositorio.findByUsuario(username);
 		return entidad;
 	}
+	
+	//Nuevo Agregado 08-06
+	@Override
+	public Usuario loginConDatos(String username, String clave) {
+	    return usuarioRepositorio.findByUsuarioAndClave(username, clave);
+	}
 }

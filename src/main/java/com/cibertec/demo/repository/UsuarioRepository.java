@@ -13,7 +13,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 			+ "FROM usuario u where u.username = :username", nativeQuery = true)
 	public Usuario findByUsuario(@Param("username") String username);
 	
-	@Query(value="SELECT u.idusuario, u.username, u.nombres, u.apellidos, u.clave, u.idrol "
-			+ "FROM usuario u where u.username = :username and u.clave = :clave", nativeQuery = true)
+	@Query("SELECT u FROM Usuario u JOIN FETCH u.rol WHERE u.username = :username AND u.clave = :clave")
 	public Usuario findByUsuarioAndClave(@Param("username") String username, @Param("clave") String clave);
 }

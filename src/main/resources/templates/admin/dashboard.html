@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{fragments/head :: head('Dashboard Admin')}"></head>
+
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <section class="section-block">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Panel de Control</span>
+          <h2 class="section-title">Dashboard</h2>
+        </div>
+        <span th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}"></span>
+      </div>
+
+      <!-- Tarjetas de estadísticas -->
+      <div class="dashboard-grid">
+
+        <!-- Reclamos hoy -->
+        <div class="dashboard-card"
+             th:classappend="${reclamosHoy == 0} ? 'estado-excelente' :
+                             (${reclamosHoy <= 2} ? 'estado-bien' :
+                             (${reclamosHoy <= 4} ? 'estado-atencion' : 'estado-critico'))">
+          <div class="dashboard-numero" th:text="${reclamosHoy}"></div>
+          <div class="dashboard-label">Reclamos Hoy</div>
+          <div class="dashboard-mensaje"
+               th:text="${reclamosHoy == 0} ? '✓ Excelente' :
+                        (${reclamosHoy <= 2} ? '● Bien' :
+                        (${reclamosHoy <= 4} ? '▲ Atención' : '✕ Crítico'))">
+          </div>
+        </div>
+
+        <!-- Reclamos este mes -->
+        <div class="dashboard-card estado-neutro">
+          <div class="dashboard-numero" th:text="${reclamosMes}"></div>
+          <div class="dashboard-label">Reclamos este Mes</div>
+        </div>
+
+        <!-- Reclamos este año -->
+        <div class="dashboard-card estado-neutro">
+          <div class="dashboard-numero" th:text="${reclamosAnio}"></div>
+          <div class="dashboard-label">Reclamos este Año</div>
+        </div>
+
+      </div>
+
+      <!-- Botón al buzón -->
+      <div style="margin-top: 2rem;">
+        <a th:href="@{/reclamos/admin/buzon}" class="btn-hero-primary">
+          Ver Buzón de Reclamos
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>
