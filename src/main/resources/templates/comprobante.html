@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragments/head :: head('Comprobante - CineStar')}"></head>
+<body class="bg-dark text-white">
+  <div th:replace="~{fragments/header :: header}"></div>
+
+  <main class="container py-5" style="margin-top: 80px; min-height: 80vh;">
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            
+            <!-- Tarjeta del Comprobante -->
+            <div class="glass-checkout-card p-5 p-lg-6" data-year="2026">
+                
+                <!-- Icono de Éxito -->
+                <div class="text-center mb-5">
+                    <div class="d-inline-block mb-4" style="width: 100px; height: 100px; background: rgba(40, 167, 69, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-check-circle-fill" style="font-size: 4rem; color: #28a745;"></i>
+                    </div>
+                    <div class="mb-2">
+                        <span class="badge bg-success fs-6 px-4 py-2">PAGO APROBADO</span>
+                    </div>
+                    <h1 class="snack-main-title mb-3 mt-3">¡GRACIAS POR TU COMPRA!</h1>
+                    <p class="text-light fs-5">Tu pedido ha sido procesado correctamente</p>
+                </div>
+
+                <!-- Datos de la Venta -->
+                <div class="bg-black bg-opacity-50 p-4 rounded-3 mb-5">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <small class="text-light d-block mb-1 fs-6">N° de Boleta</small>
+                            <strong class="cine-gold-text fs-4 fw-bold" th:text="'B001-' + ${#numbers.formatInteger(venta.idVenta, 5, 'POINT')}">B001-00001</strong>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <small class="text-light d-block mb-1 fs-6">Fecha de Emisión</small>
+                            <strong class="text-white fs-5" th:text="${#temporals.format(venta.fechaVenta, 'dd/MM/yyyy HH:mm')}">Fecha</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-light d-block mb-1 fs-6">Cliente</small>
+                            <strong class="text-white fs-5" th:text="${venta.username}">Usuario</strong>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <small class="text-light d-block mb-1 fs-6">Método de Pago</small>
+                            <strong class="text-white fs-5" th:text="${venta.metodoPago}">Tarjeta</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Productos -->
+                <div class="table-responsive mb-4">
+                    <table class="table table-dark table-borderless align-middle">
+                        <thead>
+                            <tr class="border-bottom border-secondary">
+                                <th class="text-start text-light fs-5 py-3">PRODUCTO</th>
+                                <th class="text-center text-light fs-5 py-3">CANT.</th>
+                                <th class="text-end text-light fs-5 py-3">P. UNIT.</th>
+                                <th class="text-end text-light fs-5 py-3">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="detalle : ${detalles}" class="border-bottom border-secondary">
+                                <td class="text-start py-3">
+                                    <strong class="text-white fs-5" th:text="${detalle.producto.nombreProducto}">Palomitas</strong>
+                                </td>
+                                <td class="text-center py-3">
+                                    <span class="badge bg-secondary fs-6" th:text="${detalle.cantidad}">1</span>
+                                </td>
+                                <td class="text-end py-3">
+                                    <span class="text-light fs-5" th:text="'S/ ' + ${#numbers.formatDecimal(detalle.precioUnitario, 1, 'COMMA', 2, 'POINT')}">10.00</span>
+                                </td>
+                                <td class="text-end py-3">
+                                    <strong class="cine-gold-text fs-5" th:text="'S/ ' + ${#numbers.formatDecimal(detalle.subtotal, 1, 'COMMA', 2, 'POINT')}">10.00</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Desglose Fiscal -->
+                <div class="bg-black bg-opacity-50 p-4 rounded-3 mb-5">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <p class="text-light fs-5 mb-2">
+                                <i class="bi bi-receipt me-2"></i>Valor de Venta (sin IGV):
+                            </p>
+                            <p class="text-light fs-5 mb-2">
+                                <i class="bi bi-percent me-2"></i>IGV (18%):
+                            </p>
+                            <hr class="border-secondary my-3">
+                            <p class="text-white fs-4 fw-bold mb-0">
+                                <i class="bi bi-cash-stack me-2"></i>TOTAL PAGADO:
+                            </p>
+                        </div>
+                        <div class="col-md-5 text-end">
+                            <p class="text-light fs-5 mb-2 fw-semibold" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total / 1.18, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</p>
+                            <p class="text-light fs-5 mb-2 fw-semibold" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total - (venta.total / 1.18), 1, 'COMMA', 2, 'POINT')}">S/ 0.00</p>
+                            <hr class="border-secondary my-3">
+                            <p class="cine-gold-text fs-3 fw-bold mb-0" th:text="'S/ ' + ${#numbers.formatDecimal(venta.total, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a th:href="@{/}" class="btn btn-outline-light btn-lg px-5 py-3">
+                        <i class="bi bi-house-door me-2 fs-5"></i>
+                        <span class="fs-5 fw-semibold">Volver al Inicio</span>
+                    </a>
+                    <button class="btn btn-checkout btn-lg px-5 py-3" onclick="window.print()">
+                        <i class="bi bi-printer me-2 fs-5"></i>
+                        <span class="fs-5 fw-semibold">Imprimir / Guardar PDF</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Global -->
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

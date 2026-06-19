@@ -2,83 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-	<link rel="stylesheet" th:href="@{/css/header.css}"/>
-	<link rel="stylesheet" th:href="@{/css/index.css}"/>
-	
 <header th:fragment="header">
 
-  <!-- ════════ NAVBAR ════════ -->
+  <!-- 🧭 NAVBAR PRINCIPAL -->
   <nav class="cine-nav">
-
-    <!-- Logo -->
     <a th:href="@{/}" class="cine-logo">
       <span class="cine-logo-dot"></span>
       CINE<span class="logo-accent">STAR</span>
     </a>
 
-    <!-- Links -->
     <ul class="cine-nav-links">
-      <li><a th:href="@{/}" class="active">Inicio</a></li>
+      <li><a th:href="@{/}">Inicio</a></li>
       <li><a th:href="@{/cartelera}">Cartelera</a></li>
       <li><a th:href="@{/preventas}">Preventas</a></li>
       <li><a th:href="@{/snacks}">Snacks</a></li>
       <li><a th:href="@{/reclamos}">Reclamos</a></li>
     </ul>
 
-    <!-- Botón acceder -->
-	<!-- Usuario / Login -->
-	<div class="cine-nav-right">
+    <div class="cine-nav-right">
+        <!-- Botón del Carrito (Abre el offcanvas) -->
+        <a href="#" class="nav-cart-btn" id="nav-cart-btn" 
+           data-bs-toggle="offcanvas" 
+           data-bs-target="#carritoOffcanvas" 
+           aria-controls="carritoOffcanvas"
+           aria-label="Abrir carrito de compras">
+            <i class="bi bi-cart3"></i>
+            <span id="cart-badge" class="cart-badge" 
+                  th:style="${session.cantidad != null and session.cantidad > 0 ? 'display:flex;' : 'display:none;'}" 
+                  th:text="${session.cantidad != null ? session.cantidad : 0}">0</span>
+        </a>
 
-	    <!-- Si NO ha iniciado sesión -->
-	    <button th:if="${usuario == null}"
-	            class="btn-login"
-	            onclick="openModal()">
+        <!-- Botón Acceder (Si NO hay usuario en sesión) -->
+        <button th:if="${session.usuarioLogueado == null}" class="btn-login" onclick="openModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+            Acceder
+        </button>
 
-	        <svg viewBox="0 0 24 24"
-	             fill="none"
-	             stroke="currentColor"
-	             stroke-width="2">
-	            <circle cx="12" cy="8" r="4"/>
-	            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-	        </svg>
-
-	        Acceder
-	    </button>
-
-	    <!-- Si ha iniciado sesión -->
-	    <div th:if="${usuario != null}"
-	         class="usuario-logueado">
-
-	        <span class="usuario-nombre">
-	            👤 <span th:text="${usuario}"></span>
-	        </span>
-
-	        <a th:href="@{/logout}" class="btn-logout">
-	            Salir
-	        </a>
-
-	    </div>
-
-	</div>
-
+        <!-- Usuario Logueado (Si SÍ hay usuario en sesión) -->
+        <div th:if="${session.usuarioLogueado != null}" class="usuario-logueado">
+            <span class="usuario-nombre">
+                👤 <span th:text="${session.usuarioLogueado}"></span>
+            </span>
+            <a th:href="@{/logout}" class="btn-logout">Salir</a>
+        </div>
+    </div>
   </nav>
 
-  <!-- ════════ MODAL LOGIN / REGISTRO ════════ -->
+  <!-- 🔐 MODAL DE LOGIN / REGISTRO -->
   <div class="modal-overlay" id="authModal" onclick="closeModalOutside(event)">
     <div class="modal-box">
-
       <button class="modal-close" onclick="closeModal()">&#x2715;</button>
-
-      <div class="modal-logo">CINE<span class="logo-accent">STAR</span></div>
+      <div class="modal-logo font-display">CINE<span class="logo-accent">STAR</span></div>
       <p class="modal-subtitle">Tu experiencia cinematográfica comienza aquí</p>
 
-      <!-- Tabs -->
       <div class="modal-tabs">
         <div class="modal-tab active" id="tab-login" onclick="switchTab('login')">Iniciar Sesión</div>
         <div class="modal-tab" id="tab-register" onclick="switchTab('register')">Registrarse</div>
       </div>
 
-      <!-- ── FORM LOGIN ── -->
       <div class="modal-form active" id="form-login">
         <div class="form-error" id="login-error">Usuario o contraseña incorrectos</div>
         <form th:action="@{/login}" method="POST">
@@ -97,7 +81,6 @@
         </p>
       </div>
 
-      <!-- ── FORM REGISTRO ── -->
       <div class="modal-form" id="form-register">
         <form th:action="@{/register/save}" method="POST">
           <div class="form-group">
@@ -122,11 +105,13 @@
           ¿Ya tienes cuenta? <a onclick="switchTab('login')">Inicia sesión</a>
         </p>
       </div>
-
     </div>
   </div>
 
-  <!-- ════════ SCRIPTS DEL MODAL ════════ -->
+  <!-- 🛒 INCLUSIÓN DEL CARRITO (Fragmento Separado) -->
+  <div th:replace="~{fragments/carrito :: offcanvas-carrito}"></div>
+
+  <!-- 📜 SCRIPTS DEL MODAL (Nativos, sin dependencias externas) -->
   <script>
     function openModal() {
       document.getElementById('authModal').classList.add('active');

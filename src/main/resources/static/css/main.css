@@ -1,0 +1,751 @@
+/* ═══════════════════════════════════════════════════════════════
+   CINESTAR - MAIN.CSS
+   Archivo global con: Variables, Navbar, Modal Login, Footer,
+   Utilidades reutilizables en todo el sitio.
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────
+   1. VARIABLES GLOBALES (Design Tokens)
+   Centraliza colores, fuentes y espaciados. Si cambias aquí,
+   cambia todo el sitio automáticamente.
+   ───────────────────────────────────────────────────────────── */
+:root {
+    /* Colores corporativos */
+    --cine-dark:   #0a0a0f;
+    --cine-card:   #13131a;
+    --cine-border: #1e1e2e;
+    --cine-gold:   #f5c518;
+    --cine-red:    #e63946;
+    
+    /* Colores de texto */
+    --cine-text:   #e8e8f0;
+    --cine-muted:  #6b6b80;
+    
+    /* Efectos */
+    --cine-glass:  rgba(255, 255, 255, 0.04);
+    
+    /* Tipografía */
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body:    'Outfit', sans-serif;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. RESET & BASE
+   ───────────────────────────────────────────────────────────── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--cine-dark);
+    color: var(--cine-text);
+    font-family: var(--font-body);
+    padding-top: 68px; /* Compensa el navbar fijo */
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. NAVBAR PRINCIPAL
+   ───────────────────────────────────────────────────────────── */
+.cine-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 68px;
+    background: linear-gradient(180deg, 
+        rgba(10, 10, 15, 0.98) 0%, 
+        rgba(10, 10, 15, 0.85) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--cine-border);
+}
+
+/* Logo */
+.cine-logo {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    letter-spacing: 3px;
+    color: var(--cine-text);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.cine-logo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cine-red);
+    display: inline-block;
+    margin-bottom: 2px;
+}
+
+.logo-accent {
+    color: var(--cine-gold);
+}
+
+/* Links de navegación */
+.cine-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    list-style: none;
+}
+
+.cine-nav-links a {
+    color: var(--cine-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.cine-nav-links a:hover {
+    color: var(--cine-text);
+    background: var(--cine-glass);
+}
+
+.cine-nav-links a.active {
+    color: var(--cine-gold);
+}
+
+/* Contenedor derecho (carrito + login) */
+.cine-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   4. BOTONES DEL NAVBAR (Login + Usuario)
+   ───────────────────────────────────────────────────────────── */
+.btn-login {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 1px solid var(--cine-border);
+    color: var(--cine-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.45rem 1rem;
+    border-radius: 8px;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.btn-login:hover {
+    border-color: var(--cine-gold);
+    background: rgba(245, 197, 24, 0.06);
+    color: var(--cine-gold);
+}
+
+.btn-login svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Usuario logueado */
+.usuario-logueado {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.88rem;
+}
+
+.usuario-nombre {
+    color: var(--cine-gold);
+    font-weight: 500;
+}
+
+.btn-logout {
+    color: var(--cine-muted);
+    font-size: 0.82rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--cine-border);
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-logout:hover {
+    color: var(--cine-red);
+    border-color: var(--cine-red);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   5. BOTÓN CARRITO DEL NAVBAR
+   ───────────────────────────────────────────────────────────── */
+.nav-cart-btn {
+    color: var(--cine-text);
+    position: relative;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.nav-cart-btn:hover {
+    color: var(--cine-gold);
+    text-shadow: 0 0 12px var(--cine-gold);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: var(--cine-red);
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   6. MODAL DE LOGIN / REGISTRO
+   ───────────────────────────────────────────────────────────── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-box {
+    background: var(--cine-card);
+    border: 1px solid var(--cine-border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+    position: relative;
+    animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--cine-muted);
+    font-size: 1.4rem;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: var(--cine-text);
+}
+
+.modal-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--cine-text);
+    margin-bottom: 0.3rem;
+}
+
+.modal-subtitle {
+    font-size: 0.82rem;
+    color: var(--cine-muted);
+    margin-bottom: 2rem;
+}
+
+/* Tabs Login/Register */
+.modal-tabs {
+    display: flex;
+    margin-bottom: 1.8rem;
+    background: var(--cine-dark);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.modal-tab {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.83rem;
+    font-weight: 500;
+    border-radius: 6px;
+    color: var(--cine-muted);
+    transition: all 0.2s;
+    user-select: none;
+    background: none;
+    border: 1px solid transparent;
+}
+
+.modal-tab.active {
+    background: var(--cine-card);
+    color: var(--cine-text);
+    border-color: var(--cine-border);
+}
+
+/* Formularios */
+.modal-form {
+    display: none;
+}
+
+.modal-form.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.1rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--cine-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.4rem;
+}
+
+.form-group input {
+    width: 100%;
+    background: var(--cine-dark);
+    border: 1px solid var(--cine-border);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    color: var(--cine-text);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: var(--cine-gold);
+}
+
+.form-group input::placeholder {
+    color: var(--cine-muted);
+    opacity: 0.5;
+}
+
+/* Mensaje de error en modal */
+.form-error {
+    background: rgba(230, 57, 70, 0.1);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    color: #ff6b75;
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+    display: none;
+}
+
+.form-error.show {
+    display: block;
+}
+
+/* Botón submit */
+.btn-submit {
+    width: 100%;
+    background: var(--cine-gold);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 0.5rem;
+}
+
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+.modal-switch {
+    text-align: center;
+    margin-top: 1.2rem;
+    font-size: 0.82rem;
+    color: var(--cine-muted);
+}
+
+.modal-switch a {
+    color: var(--cine-gold);
+    font-weight: 500;
+}
+
+.modal-switch a:hover {
+    text-decoration: underline;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   7. FOOTER GLOBAL
+   ───────────────────────────────────────────────────────────── */
+.cine-footer {
+    background: var(--cine-card);
+    border-top: 1px solid var(--cine-border);
+    padding: 3.5rem 0 1.5rem;
+    margin-top: 4rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: var(--cine-text);
+    margin-bottom: 0.8rem;
+}
+
+.footer-logo span {
+    color: var(--cine-gold);
+}
+
+.footer-brand p {
+    font-size: 0.83rem;
+    color: var(--cine-muted);
+    line-height: 1.7;
+}
+
+.footer-col h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cine-text);
+    margin-bottom: 1rem;
+}
+
+.footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-col ul li,
+.footer-col ul li a {
+    font-size: 0.83rem;
+    color: var(--cine-muted);
+    transition: color 0.2s;
+}
+
+.footer-col ul li a:hover {
+    color: var(--cine-gold);
+}
+
+/* Redes sociales */
+.footer-socials {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+}
+
+.social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--cine-dark);
+    border: 1px solid var(--cine-border);
+    color: var(--cine-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.social-btn:hover {
+    border-color: var(--cine-gold);
+    color: var(--cine-gold);
+}
+
+.btn-reclamos {
+    display: block;
+    background: none;
+    border: 1px solid var(--cine-border);
+    color: var(--cine-muted);
+    font-size: 0.78rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-reclamos:hover {
+    border-color: var(--cine-gold);
+    color: var(--cine-gold);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--cine-border);
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--cine-muted);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   8. UTILIDADES GLOBALES
+   Clases reutilizables en todo el sitio.
+   ───────────────────────────────────────────────────────────── */
+.cine-gold-text {
+    color: var(--cine-gold) !important;
+}
+
+.cine-red-text {
+    color: var(--cine-red) !important;
+}
+
+.font-display {
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   9. RESPONSIVE GLOBAL (Mejorado para todos los dispositivos)
+   Breakpoints profesionales:
+   - Móvil pequeño: < 480px (iPhone SE, Galaxy Fold)
+   - Móvil estándar: 480px - 768px
+   - Tablet: 768px - 1024px
+   - Desktop: > 1024px
+   ───────────────────────────────────────────────────────────── */
+
+/* ── TABLETS (768px - 1024px) ── */
+@media (max-width: 1024px) {
+    /* Footer: 4 columnas → 2 columnas para tablets */
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    /* Navbar: Reducir padding horizontal */
+    .cine-nav {
+        padding: 0 1.5rem;
+    }
+    
+    /* Modal: Ajustar ancho máximo */
+    .modal-box {
+        max-width: 380px;
+        padding: 2rem;
+    }
+}
+
+/* ── MÓVILES ESTÁNDAR (480px - 768px) ── */
+@media (max-width: 768px) {
+    /* Navbar: Ocultar links de navegación (solo logo + carrito + login) */
+    .cine-nav-links {
+        display: none;
+    }
+    
+    .cine-nav {
+        padding: 0 1.2rem;
+        height: 60px; /* Reducir altura del navbar */
+    }
+    
+    body {
+        padding-top: 60px; /* Ajustar compensación del navbar */
+    }
+    
+    /* Logo: Reducir tamaño para que no choque con botones */
+    .cine-logo {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    /* Botón carrito: Ajustar posición */
+    .nav-cart-btn {
+        margin-right: 0.8rem;
+        font-size: 1.2rem;
+    }
+    
+    /* Botón login: Más compacto */
+    .btn-login {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Modal: Ajustar para móviles */
+    .modal-box {
+        margin: 1rem;
+        padding: 1.8rem;
+        max-width: calc(100% - 2rem);
+    }
+    
+    .modal-logo {
+        font-size: 1.3rem;
+    }
+    
+    .modal-subtitle {
+        font-size: 0.78rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Footer: 2 columnas → 1 columna */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .footer-brand p {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .footer-socials {
+        justify-content: center;
+    }
+    
+    .cine-footer {
+        padding: 2.5rem 0 1.5rem;
+    }
+}
+
+/* ── MÓVILES PEQUEÑOS (< 480px) - iPhone SE, Galaxy Fold ── */
+@media (max-width: 480px) {
+    /* Navbar: Aún más compacto */
+    .cine-nav {
+        padding: 0 1rem;
+        height: 56px;
+    }
+    
+    body {
+        padding-top: 56px;
+    }
+    
+    .cine-logo {
+        font-size: 1.3rem;
+        letter-spacing: 1.5px;
+    }
+    
+    .cine-logo-dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    /* Botón login: Solo icono en móviles muy pequeños */
+    .btn-login {
+        padding: 0.4rem 0.6rem;
+        gap: 0.3rem;
+    }
+    
+    .btn-login svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    /* Modal: Padding reducido */
+    .modal-box {
+        padding: 1.5rem;
+    }
+    
+    .modal-logo {
+        font-size: 1.2rem;
+    }
+    
+    .modal-subtitle {
+        font-size: 0.75rem;
+    }
+    
+    .modal-tabs {
+        margin-bottom: 1.5rem;
+    }
+    
+    .modal-tab {
+        font-size: 0.78rem;
+        padding: 0.45rem;
+    }
+    
+    .form-group input {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.85rem;
+    }
+    
+    .btn-submit {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Footer: Ajustes finales */
+    .footer-logo {
+        font-size: 1.4rem;
+    }
+    
+    .cine-footer {
+        padding: 2rem 0 1rem;
+    }
+    
+    .footer-bottom {
+        padding-top: 1rem;
+        font-size: 0.72rem;
+    }
+}
