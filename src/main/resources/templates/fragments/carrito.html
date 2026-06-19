@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+  <div th:fragment="offcanvas-carrito" 
+       class="offcanvas offcanvas-end custom-glass-offcanvas text-white" 
+       tabindex="-1" 
+       id="carritoOffcanvas" 
+       aria-labelledby="carritoLabel">
+    
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title font-display" id="carritoLabel" style="letter-spacing: 1.5px;">
+            <i class="bi bi-bag-check me-2"></i>TU PEDIDO
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    
+    <div class="offcanvas-body d-flex flex-column p-0" style="height: 100%;">
+        
+        <!-- 🟢 Estado Vacío -->
+        <div th:if="${session.carrito == null or session.carrito.empty}" class="flex-grow-1 d-flex flex-column align-items-center justify-content-center text-center p-4">
+            <i class="bi bi-cart-x" style="font-size: 3.5rem; color: var(--cine-muted); margin-bottom: 1rem;"></i>
+            <p class="empty-cart-placeholder mb-2">Tu carrito está vacío.</p>
+            <p class="text-muted small mb-3">¡Agrega tus snacks favoritos!</p>
+            <a th:href="@{/snacks}" class="btn btn-sm btn-outline-light" data-bs-dismiss="offcanvas">Ver Catálogo</a>
+        </div>
+
+        <!-- 🟢 Lista de Productos -->
+        <div th:if="${session.carrito != null and !session.carrito.empty}" 
+             class="cart-scroll-container" 
+             style="flex-grow: 1; overflow-y: auto; min-height: 0;">
+            
+            <div th:each="item : ${session.carrito}" class="cart-item-row">
+                
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="flex-grow-1 pe-2">
+                        <h6 class="mb-1 text-white fw-semibold" style="font-size: 0.95rem;" th:text="${item.producto.nombreProducto}">Producto</h6>
+                        <small class="text-muted" th:text="'S/ ' + ${#numbers.formatDecimal(item.producto.precio, 1, 'COMMA', 2, 'POINT')} + ' c/u'">Precio</small>
+                    </div>
+                    <div class="text-end">
+                        <span class="fw-bold cine-gold-text" th:text="'S/ ' + ${#numbers.formatDecimal(item.subtotal, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                    </div>
+                </div>
+
+                <div class="cart-qty-controls">
+                    <!-- Botón Disminuir (Formulario POST simple) -->
+                    <form th:action="@{/snacks/modificar-cantidad}" method="POST" class="m-0">
+                        <input type="hidden" name="idProducto" th:value="${item.producto.idProducto}"/>
+                        <input type="hidden" name="accion" value="disminuir"/>
+                        <button type="submit" class="btn-cart-qty" 
+                                th:disabled="${item.cantidad == 1}"
+                                th:style="${item.cantidad == 1} ? 'opacity: 0.3; cursor: not-allowed;' : ''"
+                                title="Quitar una unidad">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </form>
+                    
+                    <span class="text-white fw-bold mx-1" style="min-width: 24px; text-align: center;" th:text="${item.cantidad}">1</span>
+                    
+                    <!-- Botón Aumentar (Formulario POST simple) -->
+                    <form th:action="@{/snacks/modificar-cantidad}" method="POST" class="m-0">
+                        <input type="hidden" name="idProducto" th:value="${item.producto.idProducto}"/>
+                        <input type="hidden" name="accion" value="aumentar"/>
+                        <button type="submit" class="btn-cart-qty" title="Agregar una unidad">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </form>
+
+                    <!-- Botón Eliminar (Formulario POST simple) -->
+                    <form th:action="@{/snacks/eliminar}" method="POST" class="m-0 ms-auto">
+                        <input type="hidden" name="idProducto" th:value="${item.producto.idProducto}"/>
+                        <button type="submit" class="btn-cart-remove" title="Eliminar del carrito">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🟢 Footer del Carrito (FIJO) -->
+        <div th:if="${session.carrito != null and !session.carrito.empty}" 
+             class="p-4 border-top" 
+             style="flex-shrink: 0; border-color: rgba(245, 197, 24, 0.2) !important; background: rgba(0,0,0,0.2);">
+            
+            <div class="mb-3" style="font-size: 0.85rem;">
+                <div class="d-flex justify-content-between text-muted mb-1">
+                    <span>Subtotal (sin IGV):</span>
+                    <span th:text="'S/ ' + ${#numbers.formatDecimal(session.totalCarrito / 1.18, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                </div>
+                <div class="d-flex justify-content-between text-muted mb-2">
+                    <span>IGV (18%):</span>
+                    <span th:text="'S/ ' + ${#numbers.formatDecimal(session.totalCarrito - (session.totalCarrito / 1.18), 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                </div>
+                <div class="d-flex justify-content-between border-top pt-2" style="border-color: rgba(255,255,255,0.1) !important;">
+                    <span class="fs-5 text-white fw-bold">Total a Pagar:</span>
+                    <span class="fs-4 fw-bold cine-gold-text" th:text="'S/ ' + ${#numbers.formatDecimal(session.totalCarrito, 1, 'COMMA', 2, 'POINT')}">S/ 0.00</span>
+                </div>
+            </div>
+
+            <a th:href="@{/snacks/limpiar}" class="btn btn-outline-danger w-100 mb-2 btn-sm" onclick="return confirm('¿Estás seguro de vaciar el carrito?');">
+                <i class="bi bi-trash me-1"></i> Vaciar Carrito
+            </a>
+            <a th:href="@{/checkout}" class="btn btn-checkout w-100 py-2 fw-bold">
+                <i class="bi bi-credit-card me-2"></i> Proceder al Pago
+            </a>
+        </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
