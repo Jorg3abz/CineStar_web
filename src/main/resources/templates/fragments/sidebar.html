@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<aside th:fragment="sidebar" class="admin-sidebar">
+
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <span class="cine-logo-dot"></span>
+    CINE<span class="logo-accent">STAR</span>
+  </div>
+
+  <!-- Avatar admin -->
+  <div class="sidebar-usuario">
+    <div class="sidebar-avatar" th:text="${#strings.substring(usuario, 0, 1).toUpperCase()}"></div>
+    <div>
+      <div class="sidebar-nombre" th:text="${usuario}"></div>
+      <div class="sidebar-rol">Administrador</div>
+    </div>
+  </div>
+
+  <!-- Menú -->
+  <nav class="sidebar-nav">
+    <a th:href="@{/admin/dashboard}" class="sidebar-link">
+      <span class="sidebar-icon">📊</span>
+      Dashboard
+    </a>
+    <a th:href="@{/reclamos/admin/buzon}" class="sidebar-link">
+      <span class="sidebar-icon">📬</span>
+      Buzón de Reclamos
+    </a>
+  </nav>
+
+  <!-- Logout abajo -->
+  <div class="sidebar-footer">
+    <a th:href="@{/logout}" class="sidebar-logout">
+      <span>🚪</span> Cerrar Sesión
+    </a>
+  </div>
+
+</aside>
+
+</body>
+</html>

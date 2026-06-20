@@ -3,13 +3,17 @@
 
 <head th:replace="~{fragments/head :: head('Dashboard Admin')}"></head>
 
-<body>
-  <div th:replace="~{fragments/header :: header}"></div>
+<body class="admin-body">
 
-  <section class="section-block">
-    <div class="container">
+  <div class="admin-layout">
 
-      <div class="section-header">
+    <!-- SIDEBAR -->
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <!-- CONTENIDO -->
+    <main class="admin-main">
+
+      <div class="admin-topbar">
         <div>
           <span class="section-tag">Panel de Control</span>
           <h2 class="section-title">Dashboard</h2>
@@ -17,7 +21,7 @@
         <span class="dashboard-fecha" th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}"></span>
       </div>
 
-      <!-- Tarjetas de estadísticas -->
+      <!-- Tarjetas -->
       <div class="dashboard-grid">
 
         <div class="dashboard-card"
@@ -31,7 +35,6 @@
                         (${reclamosHoy <= 2} ? '● Bien' :
                         (${reclamosHoy <= 4} ? '▲ Atención' : '✕ Crítico'))">
           </div>
-          <!-- Barra de progreso -->
           <div class="progreso-container">
             <div class="progreso-barra"
                  th:style="'width:' + (${reclamosHoy} > 5 ? 100 : ${reclamosHoy} * 20) + '%'"
@@ -57,10 +60,8 @@
 
       </div>
 
-      <!-- Fila inferior: dona + botón buzón -->
+      <!-- Fila inferior -->
       <div class="dashboard-bottom">
-
-        <!-- Gráfico dona -->
         <div class="dashboard-dona-card">
           <h3 class="dona-titulo">Estado de Reclamos</h3>
           <canvas id="graficoDona" width="260" height="260"></canvas>
@@ -71,7 +72,6 @@
           </div>
         </div>
 
-        <!-- Acceso rápido -->
         <div class="dashboard-acciones">
           <h3 class="dona-titulo">Acciones Rápidas</h3>
           <a th:href="@{/reclamos/admin/buzon}" class="accion-card">
@@ -82,65 +82,43 @@
             </div>
           </a>
         </div>
-
       </div>
 
-    </div>
-  </section>
+    </main>
+  </div>
 
   <div th:replace="~{fragments/scripts :: scripts}"></div>
-
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <script th:inline="javascript">
-    // Animación de números
-    function animarNumero(el) {
+    document.querySelectorAll('.dashboard-numero').forEach(el => {
       const target = parseInt(el.getAttribute('data-target'));
       let current = 0;
-      const step = Math.ceil(target / 30);
+      const step = Math.ceil(target / 30) || 1;
       const timer = setInterval(() => {
         current += step;
-        if (current >= target) {
-          current = target;
-          clearInterval(timer);
-        }
+        if (current >= target) { current = target; clearInterval(timer); }
         el.textContent = current;
       }, 40);
-    }
+    });
 
-    document.querySelectorAll('.dashboard-numero').forEach(animarNumero);
+    const pendientes = /*[[${pendientes}]]*/ 0;
+    const enRevision = /*[[${enRevision}]]*/ 0;
+    const resueltos  = /*[[${resueltos}]]*/ 0;
 
-    // Gráfico de dona
-	const pendientes = /*[[${pendientes}]]*/ 0;
-	const enRevision = /*[[${enRevision}]]*/ 0;
-	const resueltos  = /*[[${resueltos}]]*/ 0;
-
-    const ctx = document.getElementById('graficoDona').getContext('2d');
-    new Chart(ctx, {
+    new Chart(document.getElementById('graficoDona').getContext('2d'), {
       type: 'doughnut',
       data: {
         labels: ['Pendiente', 'En Revisión', 'Resuelto'],
         datasets: [{
           data: [pendientes, enRevision, resueltos],
-          backgroundColor: [
-            'rgba(245, 197, 24, 0.8)',
-            'rgba(59, 130, 246, 0.8)',
-            'rgba(34, 197, 94, 0.8)'
-          ],
-          borderColor: [
-            '#f5c518',
-            '#3b82f6',
-            '#22c55e'
-          ],
+          backgroundColor: ['rgba(245,197,24,0.8)', 'rgba(59,130,246,0.8)', 'rgba(34,197,94,0.8)'],
+          borderColor: ['#f5c518', '#3b82f6', '#22c55e'],
           borderWidth: 2
         }]
       },
       options: {
         responsive: false,
-        plugins: {
-          legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         cutout: '70%'
       }
     });

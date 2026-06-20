@@ -14,6 +14,7 @@
           <span class="section-tag">Atención al cliente</span>
           <h2 class="section-title">Libro de Reclamaciones</h2>
         </div>
+		<a th:href="@{/reclamos/mis-reclamos}" class="btn-ver-todo">Ver mis reclamos →</a>
       </div>
 
       <form th:action="@{/reclamos/guardar}" method="post" class="reclamo-form">
@@ -38,7 +39,7 @@
           <textarea name="descripcion" rows="5" placeholder="Describe tu reclamo detalladamente" required></textarea>
         </div>
 
-        <button type="submit" class="btn-submit">Enviar Reclamo</button>
+        <button type="submit" class="btn-submit">Enviar Mensaje</button>
 
       </form>
 

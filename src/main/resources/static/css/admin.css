@@ -351,3 +351,136 @@
   font-size: 0.78rem;
   color: var(--cine-muted);
 }
+
+
+/* ── LAYOUT ADMIN ── */
+.admin-body {
+  padding-top: 0 !important;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.admin-sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--cine-card);
+  border-right: 1px solid var(--cine-border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.sidebar-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: var(--cine-text);
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--cine-border);
+}
+
+.sidebar-usuario {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--cine-border);
+}
+
+.sidebar-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cine-gold);
+  color: #000;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-nombre {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cine-text);
+}
+
+.sidebar-rol {
+  font-size: 0.72rem;
+  color: var(--cine-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.88rem;
+  color: var(--cine-muted);
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  color: var(--cine-gold);
+  background: rgba(245, 197, 24, 0.05);
+  border-left-color: var(--cine-gold);
+}
+
+.sidebar-icon {
+  font-size: 1.1rem;
+}
+
+.sidebar-footer {
+  padding: 1.2rem 1.5rem;
+  border-top: 1px solid var(--cine-border);
+}
+
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--cine-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sidebar-logout:hover {
+  color: var(--cine-red);
+}
+
+/* ── CONTENIDO PRINCIPAL ── */
+.admin-main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}

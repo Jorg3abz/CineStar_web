@@ -3,13 +3,14 @@
 
 <head th:replace="~{fragments/head :: head('Detalle Reclamo')}"></head>
 
-<body>
-  <div th:replace="~{fragments/header :: header}"></div>
+<body class="admin-body">
+  <div class="admin-layout">
 
-  <section class="section-block">
-    <div class="container">
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-      <div class="section-header">
+    <main class="admin-main">
+
+      <div class="admin-topbar">
         <div>
           <span class="section-tag">Administración</span>
           <h2 class="section-title">Detalle del Reclamo</h2>
@@ -17,9 +18,7 @@
         <a th:href="@{/reclamos/admin/buzon}" class="btn-ver-todo">← Volver al Buzón</a>
       </div>
 
-      <!-- Datos del reclamo -->
       <div class="detalle-reclamo">
-
         <div class="detalle-fila">
           <span class="detalle-label">Cliente</span>
           <span th:text="${reclamo.usuario.nombres + ' ' + reclamo.usuario.apellidos}"></span>
@@ -48,35 +47,32 @@
                 th:text="${reclamo.estado}">
           </span>
         </div>
-
       </div>
 
-      <!-- Formulario de respuesta -->
       <form th:action="@{/reclamos/admin/actualizar}" method="post" class="reclamo-form">
         <input type="hidden" name="id" th:value="${reclamo.id}"/>
 
         <div class="form-group">
           <label>Actualizar Estado</label>
           <select name="estado" required>
-            <option value="Pendiente"    th:selected="${reclamo.estado == 'Pendiente'}">Pendiente</option>
-            <option value="En Revision"  th:selected="${reclamo.estado == 'En Revision'}">En Revisión</option>
-            <option value="Resuelto"     th:selected="${reclamo.estado == 'Resuelto'}">Resuelto</option>
+            <option value="Pendiente"   th:selected="${reclamo.estado == 'Pendiente'}">Pendiente</option>
+            <option value="En Revision" th:selected="${reclamo.estado == 'En Revision'}">En Revisión</option>
+            <option value="Resuelto"    th:selected="${reclamo.estado == 'Resuelto'}">Resuelto</option>
           </select>
         </div>
 
         <div class="form-group">
           <label>Respuesta</label>
-          <textarea name="respuesta" rows="5" 
+          <textarea name="respuesta" rows="5"
                     placeholder="Escribe tu respuesta al cliente"
                     th:text="${reclamo.respuesta}"></textarea>
         </div>
 
         <button type="submit" class="btn-submit">Guardar Respuesta</button>
-
       </form>
 
-    </div>
-  </section>
+    </main>
+  </div>
 
   <div th:replace="~{fragments/scripts :: scripts}"></div>
 </body>

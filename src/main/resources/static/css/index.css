@@ -532,7 +532,7 @@
   color: var(--cine-muted);
   font-size: 0.78rem;
   padding: 0.6rem 1rem;
-  border-radius: 8px;
+  border-radius: 15px;
   text-decoration: none;
   text-align: center;
   transition: border-color 0.2s, color 0.2s;
@@ -570,4 +570,16 @@
 @media (max-width: 480px) {
   .movies-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════
+   Atencion Al Cliente
+══════════════════════════════════════════ */
+
+.reclamos-icon {
+  width: 40px;
+  height: 30px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 15px;
 }
